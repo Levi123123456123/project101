@@ -33,13 +33,9 @@ public class Playercontroller : MonoBehaviour
             {
                 vectr -= transform.right;
             }
-        if (charcontrl.isGrounded)
-            {
-                Fallvelocity = 0;
-            }
         if (Input.GetKeyDown(KeyCode.Space) && charcontrl.isGrounded)
             {
-                Fallvelocity = - jmfrce;
+                Fallvelocity = -jmfrce;
             }
     }
     void FixedUpdate()
@@ -47,5 +43,9 @@ public class Playercontroller : MonoBehaviour
         charcontrl.Move(vectr*Time.fixedDeltaTime*smeed);
         Fallvelocity += gravity * Time.fixedDeltaTime;
         charcontrl.Move(Vector3.down*Fallvelocity*Time.fixedDeltaTime);
+        if (charcontrl.isGrounded)
+            {
+                Fallvelocity = 0;
+            }
     }
 }
