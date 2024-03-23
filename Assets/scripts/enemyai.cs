@@ -11,8 +11,11 @@ public class enemyai : MonoBehaviour
     public Playercontroller player;
     private bool playernoticed;
     public float FOV;
+    public float damage = 30;
+    private playerhealth _playerHealth;
     void Start()
     {
+        _playerHealth = player.GetComponent<playerhealth>();
         meshagent = GetComponent<NavMeshAgent>();
         hiu();
     }
@@ -40,15 +43,25 @@ public class enemyai : MonoBehaviour
             }
         else
         {
-            if(meshagent.remainingDistance == 0)
+            if(meshagent.remainingDistance <= meshagent.stoppingDistance)
             {
                 hiu();
             }
         }
-
+        hiu2thereturn();
     }
     private void hiu()
     {
         meshagent.destination = points[Random.Range(0, points.Count)].position;
+    }
+    private void hiu2thereturn()
+    {
+        if(playernoticed)
+        {
+            if(meshagent.remainingDistance <= meshagent.stoppingDistance)
+            {
+                _playerHealth.Update123(damage * Time.deltaTime);
+            }
+        }
     }
 }
