@@ -10,9 +10,17 @@ public class Playercontroller : MonoBehaviour
     public float jmfrce;
     public float smeed;
     private Vector3 vectr;
+    public float smeedorig;
+    public float smeed2;
+    public float stamina = 100;
+    public float timeout = 0;
+    public Animator anim;
+    public GameObject body;
     void Start()
     {
         charcontrl = GetComponent<CharacterController>();
+        smeedorig=smeed;
+        smeed2=smeed*2;
     }
      void Update()
     {
@@ -37,6 +45,23 @@ public class Playercontroller : MonoBehaviour
             {
                 Fallvelocity = -jmfrce;
             }
+        if (Input.GetKey(KeyCode.LeftShift)&&stamina>=10&&timeout<=0)
+        {
+            smeed =smeed2;
+            stamina-=20*Time.deltaTime;
+        }
+        else
+        {
+            smeed=smeedorig;
+            stamina+=15*Time.deltaTime;
+            stamina = Mathf.Clamp(stamina, 0, 100);
+            timeout-=Time.deltaTime;
+        }
+        if (stamina<=11)
+        {
+            timeout=5;
+
+        }
     }
     void FixedUpdate()
     {

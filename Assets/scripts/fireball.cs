@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fireball : MonoBehaviour
+public class fireball : Sounds
 {
     public float speed = 1;
     public float time = 30;
-    public float damage = 10;
+    public float damage = 15;
     private CharacterController controller;
     void Start()
     {
+        PlaySound(sounds[0], 0.1f,destroyed: true);
         Invoke("destroy", time);
     }
     void FixedUpdate()
@@ -18,11 +19,9 @@ public class fireball : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        PlaySound(sounds[1], 0.1f);
         var enemyhealth = collision.gameObject.GetComponent<enemyhealth>();
-        if (enemyhealth != null)
-        {
-            enemyhealth.value -=damage;
-        }
+        enemyhealth.Damage(damage);
         destroy();
     }
     private void destroy()

@@ -13,6 +13,8 @@ public class enemyai : MonoBehaviour
     public float FOV;
     public float damage = 30;
     private playerhealth _playerHealth;
+    public Transform enemy;
+    public Transform playerpos;
     void Start()
     {
         _playerHealth = player.GetComponent<playerhealth>();
@@ -58,7 +60,7 @@ public class enemyai : MonoBehaviour
     {
         if(playernoticed)
         {
-            if(meshagent.remainingDistance <= meshagent.stoppingDistance)
+            if(Vector3.Distance(playerpos.position, enemy.position) <= 2.3)
             {
                 _playerHealth.Update123(damage * Time.deltaTime);
             }
